@@ -1,0 +1,72 @@
+test_order_payment_aggregation:
+  model: intermediate.int_order_payment
+  inputs:
+    staging.stg_orders:
+      - order_id: "ORD_001"
+        user_id: "U001"
+        order_amount: 99.90
+        order_status: 2
+        created_at: "2026-01-15 10:30:00"
+      - order_id: "ORD_002"
+        user_id: "U002"
+        order_amount: 50.00
+        order_status: 4
+        created_at: "2026-01-16 14:00:00"
+    staging.stg_payments:
+      - payment_id: "PAY_001"
+        order_id: "ORD_001"
+        pay_amount: 79.90
+        pay_channel: "alipay"
+        paid_at: "2026-01-15 10:31:00"
+      - payment_id: "PAY_002"
+        order_id: "ORD_001"
+        pay_amount: 20.00
+        pay_channel: "wechat"
+        paid_at: "2026-01-15 10:31:05"
+      - payment_id: "PAY_003"
+        order_id: "ORD_002"
+        pay_amount: 50.00
+        pay_channel: "card"
+        paid_at: "2026-01-16 14:01:00"
+  outputs:
+    query:
+      rows:
+        - order_id: "ORD_001"
+          user_id: "U001"
+          order_status: 2
+          created_at: "2026-01-15 10:30:00"
+          order_amount_fen: 9990
+          paid_amount_fen: 9990
+        - order_id: "ORD_002"
+          user_id: "U002"
+          order_status: 4
+          created_at: "2026-01-16 14:00:00"
+          order_amount_fen: 5000
+          paid_amount_fen: 5000
+
+test_order_payment_null_handling:
+  model: intermediate.int_order_payment
+  inputs:
+    staging.stg_orders:
+      - order_id: "ORD_003"
+        user_id: "U003"
+        order_amount: 30.00
+        order_status: 1
+        created_at: "2026-01-17 09:00:00"
+    staging.stg_payments:
+      columns:
+        payment_id: varchar
+        order_id: varchar
+        pay_amount: double
+        pay_channel: varchar
+        paid_at: varchar
+      rows: []
+  outputs:
+    query:
+      rows:
+        - order_id: "ORD_003"
+          user_id: "U003"
+          order_status: 1
+          created_at: "2026-01-17 09:00:00"
+          order_amount_fen: 3000
+          paid_amount_fen: 0

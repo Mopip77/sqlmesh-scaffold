@@ -1,0 +1,7 @@
+{
+    "project_name": "my-sqlmesh-project",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+    "description": "SQL 工程化项目",
+    "sql_dialect": "presto",
+    "dt": "2026-01-01"
+}

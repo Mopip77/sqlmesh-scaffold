@@ -1,0 +1,14 @@
+gateways:
+  local:
+    connection:
+      type: duckdb
+      database: local_db.db
+
+default_gateway: local
+
+model_defaults:
+  dialect: {{ cookiecutter.sql_dialect }}
+  start: '2026-01-01'
+
+variables:
+  dt: '{{ cookiecutter.dt }}'

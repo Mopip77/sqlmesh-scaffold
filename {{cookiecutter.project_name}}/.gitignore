@@ -1,0 +1,14 @@
+# SQLMesh
+.cache/
+logs/
+local_db.db
+
+# SQLMesh generated outputs
+dag.html
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
