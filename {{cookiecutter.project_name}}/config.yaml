@@ -12,3 +12,7 @@ model_defaults:
 
 variables:
   dt: '{{ cookiecutter.dt }}'
+
+linter:
+  enabled: true
+  rules: ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"]
